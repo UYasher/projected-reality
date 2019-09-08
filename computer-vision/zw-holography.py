@@ -11,7 +11,8 @@ blank_frame = np.zeroes(width, height)
 
 def getRandomImage(path):
     """
-    Returns a random filename, chosen among the files of the given path.
+    :param path: The to randomly draw images from
+    :return: a random filename, chosen among the files of the given path.
     """
     files = os.listdir(path)
     index = random.randrange(0, len(files))
@@ -20,7 +21,7 @@ def getRandomImage(path):
 
 class Particle:
     """
-    A particle that moves and has an image which can be displated
+    A particle that moves and has an image
     """
     def __init__(self, img):
         self.img = img
@@ -36,12 +37,19 @@ class Particle:
 
 
 def zwm(directory, num_particles):
+    """
+
+    :param directory: The directory in which images are stored
+    :param num_particles: The number of particles to simulate
+    :return: Simulates and renders a Zach Weinersmith Holograph with the specific images and number of particles
+    """
 
     # Randomly initialize particles
     particles = [
-        Particle(getRandomImage("")) in range(num_particles)
+        Particle(getRandomImage(directory)) in range(num_particles)
     ]
 
+    # Run Holograph
     while True:
         frame = blank_frame()
         for p in particles:
@@ -50,6 +58,7 @@ def zwm(directory, num_particles):
             # Render new frame
             frame = cv2.addWeighted(frame, 0.4, p.img, 0.1, 0)
 
+        # Display frame in fullscreen
         cv2.namedWindow("Zach Weinersmith Machine", cv2.WND_PROP_FULLSCREEN)
         cv2.setWindowProperty("Zach Weinersmith Machine", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         cv2.imshow("Zach Weinersmith Machine", frame)
