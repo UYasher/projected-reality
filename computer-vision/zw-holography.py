@@ -38,6 +38,8 @@ class Particle:
         if (self.r[0] < 0) or (self.r[0] > width) or (self.r[1] < 0) or (self.r[1] > height):
             self.r = np.array([random.randint(0, width), random.randint(0, height)])
             self.v = np.array([random.randint(-30, 30), random.randint(-30, 30)])
+            while np.linalg.norm(self.v) == 0:
+                self.v = np.array([random.randint(-30, 30), random.randint(-30, 30)])
             self.img = getRandomImage(self.path)
 
     def __str__(self):
@@ -87,5 +89,6 @@ def zwm(directory, num_particles):
         cv2.imshow("Zach Weinersmith Machine", frame)
         cv2.waitKey(1)
 
+zwm("../images/rand", 10)
 
-zwm("../images/rand", 20)
+# TODO: Each equation should appear at most once
