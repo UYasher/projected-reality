@@ -3,7 +3,7 @@ import numpy as np
 
 # Create a VideoCapture object and read from input file
 # If the input is the camera, pass 0 instead of the video file name
-cap = cv2.VideoCapture('/home/shriyash/Downloads/640x480_video_sample.mp4')
+cap = cv2.VideoCapture('/home/shriyash/Downloads/640x360_360p.mp4')
 
 # Check if camera opened successfully
 if (cap.isOpened() == False):
@@ -16,21 +16,34 @@ while (cap.isOpened()):
     if ret == True:
 
         # Display the resulting frame
-        #cv2.namedWindow("Frame", cv2.WND_PROP_FULLSCREEN)
-        #cv2.setWindowProperty("Frame", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        cv2.namedWindow("Frame", cv2.WND_PROP_FULLSCREEN)
+        cv2.setWindowProperty("Frame", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         height, width, channels = frame.shape
 
-        frame = cv2.line(frame, (0, 10), (0, 100), (255, 0, 0), 9)
-        frame = cv2.line(frame, (10, 0), (100, 0), (255, 0, 0), 9)
+        top_offset = 3
+        thickness = -1
+        color = (0,255,0)
+        r = 50
 
-        frame = cv2.line(frame, (width, 10), (width, 100), (0, 255, 0), 9)
-        frame = cv2.line(frame, (width-10, 0), (width-100, 0), (0, 255, 0), 9)
+        frame = cv2.rectangle(frame, (0, 0), (r, r), color, thickness)
+        frame = cv2.rectangle(frame, (0, height), (r, height-r), color, thickness)
+        frame = cv2.rectangle(frame, (width, height), (width-r, height-r), color, thickness)
+        frame = cv2.rectangle(frame, (width, 0), (width - r, r), color, thickness)
 
-        frame = cv2.line(frame, (width, height-10), (width, height-100), (0, 0, 255), 9)
-        frame = cv2.line(frame, (width-10, height), (width-100, height), (0, 0, 255), 9)
+        '''
+        # Top Right Frame - Green
+        frame = cv2.line(frame, (width, 10), (width, 100), (0, 255, 0), thickness)
+        frame = cv2.line(frame, (width-10, top_offset), (width-100, top_offset), (0, 255, 0), thickness)
 
-        frame = cv2.line(frame, (0, height-10), (0, height-100), (0, 255, 255), 9)
-        frame = cv2.line(frame, (10, height), (100, height), (0, 255, 255), 9)
+        # Bottom Right Frame - Red
+        frame = cv2.line(frame, (width, height-10), (width, height-100), (0, 0, 255), thickness)
+        frame = cv2.line(frame, (width-10, height), (width-100, height), (0, 0, 255), thickness)
+
+        # Bottom Left Frame - Yellow
+        frame = cv2.line(frame, (0, height-10), (0, height-100), (0, 255, 255), thickness)
+        frame = cv2.line(frame, (10, height), (100, height), (0, 255, 255), thickness)
+        '''
+
         cv2.imshow("Frame", frame)
 
         # Press Q on keyboard to  exit
